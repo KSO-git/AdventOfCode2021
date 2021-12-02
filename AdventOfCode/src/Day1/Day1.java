@@ -2,17 +2,17 @@ package Day1;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Day1 {
     private static List<Integer> sonarDepthReadings = new ArrayList<>();
+    private static Map<Integer, Integer> sonarDepthReadingsSumOfThree = new HashMap<>();
 
     public static void main(String[] args) {
-        getTestDataFromFile();
+        //getTestDataFromFile();
+        getDataFromFile();
 
-        System.out.println(countIcreasingDepth());
+        System.out.println(countIcreasingDepthByThreeMeasurment());
 
     }
 
@@ -48,6 +48,24 @@ public class Day1 {
         int result = 0;
         for(int i = 1; i < sonarDepthReadings.size(); i++){
             if(sonarDepthReadings.get(i) >  sonarDepthReadings.get(i-1)){
+                result++;
+            }
+        }
+        return result;
+    }
+
+    private static int countIcreasingDepthByThreeMeasurment(){
+        int result = 0;
+        int counter = 0;
+        for(int i = 0; i < sonarDepthReadings.size() - 2; i++){
+            int sumOfthree = sonarDepthReadings.get(i) +
+                    sonarDepthReadings.get(i+1) + sonarDepthReadings.get(i+2);
+            sonarDepthReadingsSumOfThree.put(counter, sumOfthree);
+            counter++;
+        }
+        int maxNumber = sonarDepthReadingsSumOfThree.keySet().size() - 1;
+        for(int i = 1; i <= maxNumber; i++){
+            if(sonarDepthReadingsSumOfThree.get(i) >  sonarDepthReadingsSumOfThree.get(i-1)){
                 result++;
             }
         }
